@@ -58,13 +58,17 @@ const run = async () => {
         let countries = await getCountries();
         // sort the list alphabetically by country name before rendering
         countries = countries.sort((a, b) => a.countryName.localeCompare(b.countryName));
+        console.log(`Fetched data for ${countries.length} countries. Writing to output...`);
 
         const html = createTable(countries);
         await writeToHtml(html);
+        console.log("HTML file created successfully.");
         await writeToCsv(countries);
+        console.log("CSV file created successfully.");
         process.exit(0);
     } catch (err) {
         // any error should lead to exit code 1
+        console.error("An error occurred:", err);
         process.exit(1);
     }
 };
